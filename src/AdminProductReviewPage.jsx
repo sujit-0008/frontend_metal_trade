@@ -6,6 +6,7 @@ const AdminProductReviewPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [error, setError] = useState('');
+  const [message, setMessage]= useState('')
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const AdminProductReviewPage = () => {
       await axios.post(`http://localhost:5000/admin/products/${id}/approve`, { approved }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setError(`Product ${approved ? 'approved' : 'rejected'} successfully`);
+      setMessage(`Product ${approved ? 'approved' : 'rejected'} successfully`);
       setTimeout(() => navigate('/admin'), 2000);
     } catch (err) {
       console.error('Error updating product approval:', err);
@@ -39,6 +40,7 @@ const AdminProductReviewPage = () => {
 
   if (!token || !JSON.parse(atob(token.split('.')[1])).role === 'ADMIN') return <div className="container mx-auto p-4 text-red-500">Please log in as an admin to access this page.</div>;
   if (error) return <div className="container mx-auto p-4 text-red-500">{error}</div>;
+  if(message)return <div className="container mx-auto p-4 text-green-500">{message}</div>;
   if (!product) return <div className="container mx-auto p-4">Loading...</div>;
 
   return (

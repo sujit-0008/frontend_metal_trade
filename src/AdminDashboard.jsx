@@ -57,7 +57,7 @@ const AdminDashboard = () => {
         if (message.includes("kyc")) {
             navigate(`/kycreview/${notif.supplierId}`);
         } else if (message.includes("product")) {
-            navigate(`/newproduct/${notif.id}`);
+            navigate(`/newproduct/${notif.productId}`);
         }
     };
 

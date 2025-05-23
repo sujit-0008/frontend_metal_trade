@@ -9,6 +9,10 @@ import ProductDetailPage from './ProductDetailPage';
 import Navbar from './components/Navbar';
 import AdminKYCReviewPage from './AdminKYCReviewPage';
 import AdminProductReviewPage from './AdminProductReviewPage';
+import SignUp from './Signup';
+import AboutUs from './AboutUs';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -38,6 +42,10 @@ const App = () => {
         <Route path="/product/:id" element={<ProductDetailPage />} />
         <Route path="/kycreview/:id" element={isAdmin ? <AdminKYCReviewPage /> : <LoginPage />} />
         <Route path="/newproduct/:id" element={isAdmin ? <AdminProductReviewPage /> : <LoginPage />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path='/signup' element={<SignUp/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

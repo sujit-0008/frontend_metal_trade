@@ -7,14 +7,14 @@ const ProductDetail = ({ id, name, description, photo, price, supplierId, catego
         {/* Product Info */}
         <div className="mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
           {/* Product Image */}
-          <div className="lg:col-span-3 lg:row-end-1">
+          <div className="lg:col-span-3 lg:row-end-1 ">
             <div className="lg:flex lg:items-start">
-              <div className="lg:order-2 lg:ml-5">
+              <div className="lg:order-2 lg:ml-5 ">
                 <div className="max-w-xl overflow-hidden rounded-lg">
                   <img className="h-full w-full object-cover" src={photo} alt={name} />
                 </div>
               </div>
-              <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
+              <div className="mt-2 w-full lg:order-1 border lg:w-32 lg:flex-shrink-0">
                 <div className="flex flex-row items-start lg:flex-col">
                   <img className="h-20 mb-3 rounded-lg border-2 border-gray-900 object-cover" src={photo} alt={name} />
                 </div>
@@ -48,6 +48,10 @@ const ProductDetail = ({ id, name, description, photo, price, supplierId, catego
             <div>
               <h2 className="mt-8 text-base text-gray-900">Supplier ID</h2>
               <p className="mt-2 rounded-lg border px-6 py-2 font-medium text-gray-700">{supplierId}</p>
+            </div>
+
+            <div>
+              <button  className="flex items-center justify-center w-full rounded-md bg-slate-900 px-5 py-2 text-sm font text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"> Contact Supplier </button>
             </div>
           </div>
         </div>

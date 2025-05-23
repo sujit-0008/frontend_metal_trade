@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // Optional: `lucide-react` for icons
+import { Menu, X,Home } from 'lucide-react'; // Optional: `lucide-react` for icons
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold text-gray-800">
-          MySite
+         <Home/> MetalTrade
         </Link>
 
         {/* Hamburger Icon (Mobile) */}
@@ -52,7 +52,12 @@ const Navbar = () => {
         
         </form>
 
+        
+
         <div className="hidden md:flex items-center gap-4">
+        <Link to="/about" className="px-4 py-2 text-blue-600 hover:text-blue-800">
+            About us
+          </Link>
           {isAdmin && <Link to="/admin" className="px-4 py-2 text-blue-600 hover:text-blue-800">
             Admin Dashbord
           </Link>}
@@ -60,9 +65,15 @@ const Navbar = () => {
         {isSupplier && <Link to="/supplier" className="px-4 py-2 text-blue-600 hover:text-blue-800">
             Supplier Dashbord
           </Link>}
-          
+          <Link
+            to="/signup"
+            className="block text-blue-600 hover:text-blue-800 px-4"
+            onClick={() => setIsOpen(false)}
+          >
+            Sign up
+          </Link>
           <Link to="/login" className="px-4 py-2 text-blue-600 hover:text-blue-800">
-            Sign In
+            login 
           </Link>
           <Link
             to="/register"
@@ -83,12 +94,19 @@ const Navbar = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+              <Link
+            to="/signup"
+            className="block text-blue-600 hover:text-blue-800 px-4"
+            onClick={() => setIsOpen(false)}
+          >
+            Sign up
+          </Link>
           <Link
             to="/login"
             className="block text-blue-600 hover:text-blue-800 px-4"
             onClick={() => setIsOpen(false)}
           >
-            Sign In
+            Log In
           </Link>
           <Link
             to="/register"

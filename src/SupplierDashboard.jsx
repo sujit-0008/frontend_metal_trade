@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from './components/ProductCard';
+import ProfilePage from './components/ProfilePage';
 
 const SupplierDashboard = () => {
   const [activeSection, setActiveSection] = useState('yourproduct'); // Default section
   const [supplier, setSupplier] = useState(null);
   const [products, setProducts] = useState([]);
   const [message, setMessage] = useState('');
+  
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSupplierData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/suppliers/me', {
+        const response = await axios.get('http://localhost:5000/auth/me', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSupplier(response.data);
@@ -89,7 +91,7 @@ const SupplierDashboard = () => {
           <li>
             <button
               onClick={() => setActiveSection('yourproduct')}
-              className={`block w-full text-left py-2 px-4 rounded ${activeSection === 'yourproduct' ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-gray-200'}`}
+              className={`block w-full text-left py-2 px-4 rounded border-l-4 transitionn ${activeSection === 'yourproduct' ? 'border-blue-700 text-blue-700' : 'border-transparent hover:border-blue-700 hover:text-blue-700'}`}
             >
               Your Products
             </button>
@@ -97,7 +99,7 @@ const SupplierDashboard = () => {
           <li>
             <button
               onClick={() => setActiveSection('kyc')}
-              className={`block w-full text-left py-2 px-4 rounded ${activeSection === 'kyc' ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-gray-200'}`}
+              className={`block w-full text-left py-2 px-4 rounded border-l-4 transitionn ${activeSection === 'kyc' ? 'border-blue-700 text-blue-700' : 'border-transparent hover:border-blue-700 hover:text-blue-700'}`}
             >
               KYC Form
             </button>
@@ -105,17 +107,35 @@ const SupplierDashboard = () => {
           <li>
             <button
               onClick={() => setActiveSection('productupload')}
-              className={`block w-full text-left py-2 px-4 rounded ${activeSection === 'productupload' ? 'bg-blue-500 text-white' : 'text-gray-700 hover:bg-gray-200'}`}
+              className={`block w-full text-left py-2 px-4 rounded border-l-4 transition ${activeSection === 'productupload' ? 'border-blue-700 text-blue-700' : 'border-transparent hover:border-blue-700 hover:text-blue-700'}`}
             >
               Product Upload
             </button>
           </li>
+
+          <li>
+            <button
+              onClick={() => setActiveSection('profile')}
+              className={`block w-full text-left py-2 px-4 rounded border-l-4 transition ${activeSection === 'profile' ? 'border-blue-700 text-blue-700' : 'border-transparent hover:border-blue-700 hover:text-blue-700'}`}
+            >
+              My Profile
+            </button>
+          </li>
+          <li>
+            <button
+              
+              className={`block w-full text-left py-2 px-4 rounded border-l-4 transition ${activeSection === '' ? 'border-blue-700 text-blue-700' : 'border-transparent hover:border-blue-700 hover:text-blue-700'}`}
+            >
+              FAQ
+            </button>
+          </li>
+        
         </ul>
       </nav>
 
       {/* Main Content */}
       <div className="flex-1  p-6">
-        <h1 className="text-2xl font-bold mb-4">Supplier Dashboard</h1>
+      
       
         {activeSection === 'yourproduct' && (
           <div className=''>
@@ -145,6 +165,7 @@ const SupplierDashboard = () => {
   !supplier?.kycApproved ? (
     <div>
       <h2 className="text-xl font-semibold mb-4">KYC Form</h2>
+      {message && <p className={message.includes('Failed') ? 'text-red-500' : 'text-green-500'}>{message}</p>}
       <form onSubmit={handleKYCSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Business Registration</label>
@@ -169,12 +190,14 @@ const SupplierDashboard = () => {
           supplier?.kycApproved ? (
             <div>
               <h2 className="text-xl font-semibold mb-4">Product Upload</h2>
+              {message && <p className={message.includes('Failed') ? 'text-red-500' : 'text-green-500'}>{message}</p>}
               <form onSubmit={handleProductUpload} className="space-y-4">
                 <input type="text" name="name" placeholder="Product Name" className="block w-full p-2 border rounded" required />
                 <textarea name="description" placeholder="Description" className="block w-full p-2 border rounded" />
                 <input type="number" name="price" placeholder="Price" step="0.01" className="block w-full p-2 border rounded" required />
                 <input type="text" name="type" placeholder="Type (e.g., Electronics)" className="block w-full p-2 border rounded" />
                 <input type="text" name="category" placeholder="Category (e.g., Laptops)" className="block w-full p-2 border rounded" />
+    
                 <input type="file" name="productImage" className="block w-full p-2 border rounded" required />
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded">Upload Product</button>
               </form>
@@ -183,7 +206,14 @@ const SupplierDashboard = () => {
             <p>Please submit and get your KYC approved before uploading products.</p>
           )
         )}
+
+{activeSection === 'profile' && (
+  <ProfilePage {...supplier} />
+
+)}
+
       </div>
+      
     </div>
   );
 };
